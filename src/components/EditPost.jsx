@@ -5,7 +5,6 @@ import axios from 'axios';
 // Function to update a post
 const updatePost = async (post) => {
   const { data } = await axios.put(`https://jsonplaceholder.typicode.com/posts/${post.id}`, post);
-  console.log('Post updated:', data); 
   return data;
 };
 
@@ -23,14 +22,12 @@ const EditPost = ({ post, onClose }) => {
     mutationFn: updatePost,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
-      console.log('Post update successful'); // Debugging line
       onClose();
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted for update:', { ...post, title, body }); // Debugging line
     mutation.mutate({ ...post, title, body });
   };
 

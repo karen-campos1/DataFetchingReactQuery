@@ -1,36 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import PostList from './PostList';
+import UserSelector from './UserSelector';
 
 // Function to fetch posts from the API
 const fetchPosts = async () => {
   const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts');
-  console.log('Fetched posts:', data); 
+  return data;
+};
+
+// Function to fetch users from the API
+const fetchUsers = async () => {
+  const { data } = await axios.get('https://jsonplaceholder.typicode.com/users');
   return data;
 };
 
 const Posts = ({ onEdit, onDelete }) => {
-  const { data, error, isLoading } = useQuery({
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  const { data: posts, error: postsError, isLoading: postsLoading } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>An error occurred: {error.message}</p>;
+  const { data: users, error: usersError, isLoading: usersLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: fetchUsers,
+  });
+
+  if (postsLoading || usersLoading) return <p>Loading...</p>;
+  if (postsError) return <p>An error occurred while fetching posts: {postsError.message}</p>;
+  if (usersError) return <p>An error occurred while fetching users: {usersError.message}</p>;
 
   return (
     <div>
-      <h1 className='title'>Posts: </h1>
-      <ul>
-        {data.map(post => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <button onClick={() => onEdit(post)}>Edit</button>
-            <button onClick={() => onDelete(post.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <UserSelector users={users} onUserSelect={setSelectedUserId} />
+      <PostList posts={posts} selectedUserId={selectedUserId} onEdit={onEdit} onDelete={onDelete} />
     </div>
   );
 };
