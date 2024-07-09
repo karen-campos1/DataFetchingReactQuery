@@ -1,0 +1,31 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  background-color: rgb(250, 252, 244);
+}
+
+.title {
+  text-align: center;
+}
+
+.form{
+  padding: 20px;
+  margin: 15px;
+  text-align: center;
+  align-items: center;
+}
+
+button{
+  background-color: beige;
+  border-radius: 10px;
+  gap: 5px;
+}
+
+button:hover{
+  background-color: rgb(240, 127, 127);
+  color: beige;
+}
