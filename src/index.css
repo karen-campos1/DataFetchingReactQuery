@@ -66,3 +66,7 @@ button:hover{
   font-size: 16px;
   cursor: pointer;
 }
+
+#box{
+  padding-top: 15px;
+}

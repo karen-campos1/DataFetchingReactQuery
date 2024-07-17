@@ -7,6 +7,7 @@ const UserSelector = ({ users, onUserSelect }) => {
   }, [onUserSelect]);
 
   return (
+    <div id="box">
     <select onChange={handleUserSelect}>
       <option value="">All Users</option>
       {users.map(user => (
@@ -15,6 +16,7 @@ const UserSelector = ({ users, onUserSelect }) => {
         </option>
       ))}
     </select>
+    </div>
   );
 };
 

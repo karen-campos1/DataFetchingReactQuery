@@ -16,6 +16,7 @@ const fetchUsers = async () => {
   return data;
 };
 
+
 const Posts = ({ onEdit, onDelete }) => {
   const [selectedUserId, setSelectedUserId] = useState(null);
 
